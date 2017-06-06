@@ -21,10 +21,8 @@ public class JavaJokeTeller {
     };
     public String tellMeJoke(){
         int idx=((new Random()).nextInt(jokes.length));
-        System.out.println("fuck idx:: "+idx);
-       // if(idx>-1&&idx<jokes.length)
+      
             return jokes[idx];
-       // else
-         //   return jokes[0];
+       
     }
 }
