@@ -1,21 +1,34 @@
 package com.udacity.gradle.builditbigger;
 
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
+import android.app.ProgressDialog;
 
-import com.example.JavaJokeTeller;
+import com.example.androidjokerdisplay.JokeDisplay;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends AppCompatActivity implements OnFetchJokeListener{
+    static ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setCancelable(false);
+
     }
 
 
@@ -42,9 +55,21 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void tellJoke(View view){
-        JavaJokeTeller javaJokeTeller=new JavaJokeTeller();
-        Toast.makeText(this, javaJokeTeller.tellMeJoke(), Toast.LENGTH_LONG).show();
+        progressDialog.show();
+        EndpointsAsyncTask endpointsAsyncTask=new EndpointsAsyncTask(this);
+        endpointsAsyncTask.execute();
+
+
     }
 
 
+    @Override
+    public void onJokeFetched(String joke) {
+        if (progressDialog.isShowing())
+            progressDialog.dismiss();
+        Intent intent=new Intent(this,JokeDisplay.class);
+        intent.putExtra(JokeDisplay.key,joke);
+        startActivity(intent);
+
+    }
 }

@@ -2,6 +2,8 @@ package com.example;
 
 import java.util.Random;
 
+
+
 /**
  * Created by BeTheChange on 6/5/2017.
  */
@@ -18,10 +20,11 @@ public class JavaJokeTeller {
             "A: A brunette who has told too many blonde jokes."
     };
     public String tellMeJoke(){
-        int idx=((new Random()).nextInt())%jokes.length;
-        if(idx>-1)
+        int idx=((new Random()).nextInt(jokes.length));
+        System.out.println("fuck idx:: "+idx);
+       // if(idx>-1&&idx<jokes.length)
             return jokes[idx];
-        else
-            return jokes[0];
+       // else
+         //   return jokes[0];
     }
 }
